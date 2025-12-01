@@ -14,6 +14,22 @@ node {
         )
     }
 
+    stage('Build Next.js') {
+    agent {
+        docker {
+            image 'node:20'
+            args '-u root'
+        }
+    }
+    steps {
+        sh '''
+          npm install
+          npm run build
+        '''
+    }
+}
+
+
     stage('Deploy to EC2'){
         echo 'Deploying to EC2'
         sh """
